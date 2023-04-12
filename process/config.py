@@ -1,6 +1,11 @@
 """ This file contains the global configurations for the project. """
 
 
+DURATION = 1
+""" Song duration percentage.
+Lower means less usage in database, but decrease exact ratio"""
+
+
 SAMPLE_RATE = 22050
 """ When a file is fingerprinted it is resampled to SAMPLE_RATE Hz.
 Higher sample rates mean more accuracy in recognition, but also slower recognition

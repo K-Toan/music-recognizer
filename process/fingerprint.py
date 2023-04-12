@@ -9,6 +9,8 @@ from scipy.ndimage import maximum_filter
 def file_to_spectrogram(filename):
     """Calculates the spectrogram of a file."""
     a = AudioSegment.from_file(filename).set_channels(1).set_frame_rate(config.SAMPLE_RATE)
+    input_duration = a.duration_seconds * config.DURATION
+    a = a[:input_duration * 1000]  # Cut the audio depend on DURATION config
     audio = np.frombuffer(a.raw_data, np.int16)
     nperseg = int(config.SAMPLE_RATE * config.FFT_WINDOW_SIZE)
     return spectrogram(audio, config.SAMPLE_RATE, nperseg=nperseg)
