@@ -6,5 +6,5 @@ from process.recognise import *
 # samples_path = "./samples"
 # store.store_samples(samples_path)
 
-print(recognise_song("./test_samples/Cut1.mp3"))
+print(recognize_song("./test_samples/Cut1.mp3"))
 
