@@ -19,7 +19,7 @@ def recognize_song(filepath):
     matched_song = get_best_match(hashes)
     print(matched_song)
 
-    matches_list = get_matches_list(hashes)
+    # matches_list = get_matches_list(hashes)
     # for song in matches_list.items():
     #     print(song)
 

@@ -4,7 +4,7 @@ from process.recognise import *
 
 # database
 # samples_path = "./samples"
-# store.store_samples(samples_path)
+# store.store_samples(samples_1path)
 
-print(recognize_song("./test_samples/Cut1.mp3"))
+print(recognize_song("test_samples/Cut1.mp3"))
 
