@@ -10,5 +10,5 @@ queries_path = './queries/'
 delete.delete_all()
 store.store_samples(samples_path)
 
-# Liệt kê các file trong thư mục
+# recognize song
 recognize.recognize_multiple_songs(queries_path)
