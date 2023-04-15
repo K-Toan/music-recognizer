@@ -98,7 +98,7 @@ def generate_fingerprint(file_path):
     :param file_path: The path to the file.
     :returns: The output of :func:`hash_points`.
     """
-    print(f"\n---------------Hashing {os.path.basename(file_path)}---------------")
+    print(f"\n---------------Hashing {file_path}---------------")
     f, t, Sxx = file_to_spectrogram(file_path)
     peaks = find_peaks(Sxx)
     peaks = idxs_to_tf_pairs(peaks, t, f)
