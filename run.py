@@ -1,4 +1,3 @@
-# import logger
 import os
 import glob
 from database import store, delete
