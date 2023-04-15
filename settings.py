@@ -2,7 +2,7 @@
 from pymongo import MongoClient
 
 
-# Connection configurations
+# ---------------Connection configurations---------------
 conn = MongoClient("mongodb://localhost:27017/")
 """ Host
 """
@@ -15,7 +15,7 @@ song_collection = db["audio_fingerprints"]
 """ Collection
 """
 
-# Fingerprint configurations
+# ---------------Fingerprint configurations---------------
 DURATION = 0.5
 """ Song duration percentage.
 Lower means less usage in database, but decrease exact ratio
@@ -59,6 +59,10 @@ FFT_WINDOW_SIZE = 0.2
 """ The number of seconds of audio to use in each spectrogram segment. Larger windows mean higher
 frequency resolution but lower time resolution in the spectrogram.
 """
+
+BIN_WIDTH = 0.5
+""" Determine the size of bins in the histogram (the distance between values in the histogram).
+For evaluating the frequency of occurrence of particular time intervals."""
 
 NUM_WORKERS = 24
 """ Number of workers to use when registering songs.

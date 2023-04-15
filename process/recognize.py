@@ -1,26 +1,19 @@
+import os
+import glob
 import numpy as np
 from settings import *
 from process.fingerprint import generate_fingerprint
 from database.fetch import get_matches
 
 
-def register_song(file_path):
-    pass
-
-
-def register_directory(path):
-    pass
-
-
 def score_match(offsets):
     """Score a matched song."""
-    # Use bins spaced 0.5 seconds apart
-    binwidth = 0.5
+    bin_width = BIN_WIDTH
     tks = list(map(lambda x: x[0] - x[1], offsets))
     hist, _ = np.histogram(tks,
                            bins=np.arange(int(min(tks)),
-                                          int(max(tks)) + binwidth + 1,
-                                          binwidth))
+                                          int(max(tks)) + bin_width + 1,
+                                          bin_width))
     return np.max(hist)
 
 
@@ -42,8 +35,15 @@ def best_match(matches):
 
 def recognize_song(file_path):
     """Recognises a pre-recorded sample."""
+    print(f"\n---------------Comparing {os.path.basename(file_path)}---------------")
     fingerprints = generate_fingerprint(file_path)
     matches = get_matches(fingerprints)
     matched_song = best_match(matches)
     print(f"---------------Matched song: {matched_song}---------------")
     return matched_song
+
+
+def recognize_multiple_songs(dir_path):
+    for file_path in glob.glob(os.path.join(dir_path, '*')):
+        if os.path.isfile(file_path):
+            recognize_song(dir_path + os.path.basename(file_path))
