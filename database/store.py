@@ -3,7 +3,9 @@ from settings import *
 from process.fingerprint import generate_fingerprint
 
 
-def store_one(name, fingerprints):
+def store_sample(name, fingerprints):
+    """ Hash and store one song to db
+    """
     # fingerprints
     fingerprints_docs = [{"hash": h[0], "offset": h[1]} for h in fingerprints]
 
@@ -18,6 +20,8 @@ def store_one(name, fingerprints):
 
 
 def store_samples(samples_path):
+    """ Hash and store multiple songs to db
+    """
     # Correct path
     if samples_path[len(samples_path) - 1] != '/':
         samples_path += '/'
@@ -27,5 +31,5 @@ def store_samples(samples_path):
         if song_collection.count_documents({"name": sample_name}) > 0:
             print("Skip", sample_name)
         else:
-            store_one(sample_name, generate_fingerprint(samples_path + sample_name))
+            store_sample(sample_name, generate_fingerprint(samples_path + sample_name))
 

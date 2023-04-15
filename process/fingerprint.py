@@ -12,15 +12,23 @@ def my_spectrogram(audio):
     return spectrogram(audio, SAMPLE_RATE, nperseg=nperseg)
 
 
-def file_to_spectrogram(filename):
-    """Calculates the spectrogram of a file."""
-    a = AudioSegment.from_file(filename).set_channels(1).set_frame_rate(SAMPLE_RATE)
+def file_to_spectrogram(file_path):
+    """Calculates the spectrogram of a file.
+    :param file_path: Path to the file to spectrogram.
+    :returns: * f - list of frequencies
+              * t - list of times
+              * Sxx - Power value for each time/frequency pair
+    """
+    a = AudioSegment.from_file(file_path).set_channels(1).set_frame_rate(SAMPLE_RATE)
     audio = np.frombuffer(a.raw_data, np.int16)
     return my_spectrogram(audio)
 
 
 def find_peaks(Sxx):
-    """Finds peaks in a spectrogram."""
+    """Finds peaks in a spectrogram.
+    :param Sxx: The spectrogram.
+    :returns: A list of peaks in the spectrogram.
+    """
     data_max = maximum_filter(Sxx, size=PEAK_BOX_SIZE, mode='constant', cval=0.0)
     peak_goodmask = (Sxx == data_max)  # good pixels are True
     y_peaks, x_peaks = peak_goodmask.nonzero()
@@ -47,7 +55,14 @@ def hash_point_pair(p1, p2):
 
 
 def target_zone(anchor, points, width, height, t):
-    """Generates a target zone as described in `the Shazam paper"""
+    """Generates a target zone as described in `the Shazam paper
+    :param anchor: The anchor point
+    :param points: The list of points to search
+    :param width: The width of the target zone
+    :param height: The height of the target zone
+    :param t: How many seconds after the anchor point the target zone should start
+    :returns: Yields all points within the target zone.
+    """
     x_min = anchor[1] + t
     x_max = x_min + width
     y_min = anchor[0] - (height * 0.5)
@@ -61,7 +76,10 @@ def target_zone(anchor, points, width, height, t):
 
 
 def hash_points(points):
-    """Generates all hashes for a list of peaks."""
+    """Generates all hashes for a list of peaks.
+    :param points: The list of peaks.
+    :returns: A list of tuples of the form (hash, time offset, song_id).
+    """
     hashes = []
     for anchor in points:
         for target in target_zone(anchor, points, TARGET_T, TARGET_F, TARGET_START):
@@ -76,7 +94,11 @@ def generate_song_id(file_path):
 
 
 def generate_fingerprint(file_path):
-    """Generate hashes for a file."""
+    """Generate hashes for a file.
+    :param file_path: The path to the file.
+    :returns: The output of :func:`hash_points`.
+    """
+    print(f"\n---------------Hashing {os.path.basename(file_path)}---------------")
     f, t, Sxx = file_to_spectrogram(file_path)
     peaks = find_peaks(Sxx)
     peaks = idxs_to_tf_pairs(peaks, t, f)

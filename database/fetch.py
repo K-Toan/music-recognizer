@@ -3,6 +3,13 @@ from collections import defaultdict
 
 
 def get_matches(fingerprints):
+    """Get matching songs for a set of hashes.
+    :param fingerprints: A list of hashes as returned by
+        :func:`~fingerprint.generate_fingerprints`.
+    :returns: A dictionary mapping ``song_name`` to a list of time offset tuples. The tuples are of
+        the form (result offset, original hash offset).
+    :rtype: dict(str: list(tuple(float, float)))
+    """
     # query hashes
     query_h_dict = {}
     for h, t in fingerprints:
