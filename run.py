@@ -7,7 +7,7 @@ samples_path = "./samples/"
 queries_path = './queries/'
 
 # database
-delete.delete_all()
+# delete.delete_all()
 store.store_samples(samples_path)
 
 # recognize song

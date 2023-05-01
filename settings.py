@@ -7,7 +7,7 @@ conn = MongoClient("mongodb://localhost:27017/")
 """ Host
 """
 
-db = conn["songs_recogniser"]
+db = conn["songs_recognizer"]
 """ Database
 """
 
@@ -16,7 +16,7 @@ song_collection = db["audio_fingerprints"]
 """
 
 # ---------------Fingerprint configurations---------------
-DURATION = 0.5
+DURATION = 1
 """ Song duration percentage.
 Lower means less usage in database, but decrease exact ratio
 """
